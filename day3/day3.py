@@ -21,6 +21,21 @@ def read_input_file(file_name):
         instruction_set.strip() # Remove leading/trailing whitespace/newlines
         return instruction_set
 
+def remove_corrupt_values(instruction_set):
+    """
+    Remove the corrupt mul values from an instruction set.
+
+    Args:
+        instruction_set (string): The original set of instructions
+
+    Returns:
+        string: The instruction set with corrupt values removed
+    """
+    regex_ignore_corrupt_values = r"mul\((\d{1,3}),(\d{1,3})\)"
+    valid_mul_instructions = re.findall(regex_ignore_corrupt_values, instruction_set)
+    print(f"\nThe valid mul instructions are: {valid_mul_instructions}")
+    return valid_mul_instructions
+
 def main():
     """
     Main function to avoid using global variables
@@ -28,9 +43,7 @@ def main():
     instruction_set = read_input_file("puzzle_input.txt")
     print(f"The instruction_set is: {instruction_set}")
 
-    regex_ignore_corrupt_values = r"mul\((\d{1,3}),(\d{1,3})\)"
-    valid_mul_instructions = re.findall(regex_ignore_corrupt_values, instruction_set)
-    print(f"\nThe valid mul instructions are: {valid_mul_instructions}")
+    valid_mul_instructions = remove_corrupt_values(instruction_set)
 
     result = 0
     for x, y in valid_mul_instructions:
